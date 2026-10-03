@@ -2,7 +2,7 @@ import { Container } from '@app/components/common/container';
 import { ProductListWithPagination } from '@app/components/product/ProductListWithPagination';
 import { PageHeading } from '@app/components/sections/PageHeading';
 import { listCategories } from '@libs/util/server/data/categories.server';
-import { fetchProducts } from '@libs/util/server/products.server';
+import { fetchProducts, getProductsPaginationParams } from '@libs/util/server/products.server';
 import clsx from 'clsx';
 import { LoaderFunctionArgs, redirect } from 'react-router';
 import { NavLink, useLoaderData } from 'react-router';
@@ -19,6 +19,7 @@ export const loader = async ({ request, params }: LoaderFunctionArgs) => {
   }
 
   const { products, count, limit, offset } = await fetchProducts(request, {
+    ...getProductsPaginationParams(request),
     category_id: category.id,
   });
 
